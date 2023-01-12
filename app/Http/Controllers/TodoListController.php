@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TODOList\CreateTodoListRequest;
 use App\Http\Requests\TODOList\IndexTodoListRequest;
 use App\Http\Requests\TODOList\UpdateTodoListRequest;
-use App\Http\Resources\TodoListCollection;
-use App\Http\Resources\TodoListResource;
+use App\Http\Resources\ToDoList\TodoListCollection;
+use App\Http\Resources\ToDoList\TodoListResource;
 use App\Models\TodoList;
 use App\Services\TODOListService;
 

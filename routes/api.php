@@ -22,3 +22,5 @@ Route::apiResource('todo-list',\App\Http\Controllers\TodoListController::class);
 
 
 Route::apiResource('todo-list/{todo_list}/attachment',\App\Http\Controllers\TodoListAttachController::class)->except('update');
+
+Route::apiResource('tag', \App\Http\Controllers\TagController::class);

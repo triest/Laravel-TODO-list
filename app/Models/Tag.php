@@ -4,20 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TodoList extends BaseModel
+class Tag extends BaseModel
 {
     use HasFactory;
 
     protected $fillable = ['title', 'description'];
 
-    public function attachments()
-    {
-        return $this->morphMany(Attachment::class, 'entity');
-    }
-
     public function todolist()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(TodoList::class);
     }
-
 }
