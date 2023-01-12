@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('todo-list',\App\Http\Controllers\TodoListController::class);
 
 
-Route::apiResource('todo-list/{todo_list}/attach',\App\Http\Controllers\TodoListController::class)->except('update');
+Route::apiResource('todo-list/{todo_list}/attachment',\App\Http\Controllers\TodoListAttachController::class)->except('update');

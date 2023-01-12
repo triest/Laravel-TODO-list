@@ -9,4 +9,10 @@ class TodoList extends BaseModel
     use HasFactory;
 
     protected $fillable = ['title', 'description'];
+
+    public function attachments()
+    {
+        return $this->morphMany(Attachment::class, 'entity');
+    }
+
 }
