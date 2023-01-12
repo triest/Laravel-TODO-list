@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('todo-list',\App\Http\Controllers\TodoListController::class);
+
+
+Route::apiResource('todo-list/{todo_list}/attach',\App\Http\Controllers\TodoListController::class)->except('update');
