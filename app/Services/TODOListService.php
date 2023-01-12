@@ -9,7 +9,6 @@ use App\Sorters\ToDoListSorter;
 
 class TODOListService
 {
-
     public function index(IndexTodoListRequest $request)
     {
         $filters = new ToDoListFilter($request);
@@ -34,7 +33,7 @@ class TODOListService
 
         $todoList->save();
 
-        return $todoList;
+        return $todoList->refresh();
     }
 
     public function show(TodoList $todoList)

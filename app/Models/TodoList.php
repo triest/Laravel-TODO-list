@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class TodoList extends Model
+class TodoList extends BaseModel
 {
     use HasFactory;
+
+    protected $fillable = ['title', 'description'];
 }
