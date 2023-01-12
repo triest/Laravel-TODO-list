@@ -15,7 +15,7 @@ class TodoList extends BaseModel
         return $this->morphMany(Attachment::class, 'entity');
     }
 
-    public function todolist()
+    public function tags()
     {
         return $this->belongsToMany(Tag::class);
     }

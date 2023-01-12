@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TODOList\AddTagToToDoListRequest;
 use App\Http\Requests\TODOList\CreateTodoListRequest;
 use App\Http\Requests\TODOList\IndexTodoListRequest;
 use App\Http\Requests\TODOList\UpdateTodoListRequest;
+use App\Http\Resources\Tag\TagResource;
 use App\Http\Resources\ToDoList\TodoListCollection;
 use App\Http\Resources\ToDoList\TodoListResource;
 use App\Models\TodoList;
@@ -84,6 +86,16 @@ class TodoListController extends Controller
     public function destroy(TodoList $todo_list)
     {
         $this->TODOListService->destroy($todo_list);
+    }
+
+
+    public function addTag(TodoList $todoList,AddTagToToDoListRequest $request){
+        $this->TODOListService->addTag($todoList,$request->validated());
+    }
+
+    public function getTags(TodoList $todoList){
+
+        return TagResource::collection($todoList->tags);
     }
 
 }
