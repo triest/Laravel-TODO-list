@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AttachmentResource;
 use App\Http\Requests\TODOList\StoreAttachmentDocumentPRRequest;
 use App\Models\Attachment;

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\TODOList\AddTagToToDoListRequest;
 use App\Http\Requests\TODOList\CreateTodoListRequest;
 use App\Http\Requests\TODOList\IndexTodoListRequest;

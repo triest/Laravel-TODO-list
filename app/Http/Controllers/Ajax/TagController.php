@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\CreateTagRequest;
 use App\Http\Requests\Tag\IndexTagRequest;
 use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Http\Resources\Tag\TagCollection;
 use App\Http\Resources\Tag\TagResource;
-use App\Http\Resources\ToDoList\TodoListCollection;
 use App\Models\Tag;
 use App\Services\TagService;
 
