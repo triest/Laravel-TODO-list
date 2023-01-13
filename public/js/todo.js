@@ -7,19 +7,60 @@ $('#sendTodoItem').submit(function (evt) {
     evt.preventDefault();
     window.history.back();
 });*/
-$(function () {
-    var frm = $('#sendTodoItem');
-    frm.submit(function (ev) {
-        ev.preventDefault();
+
+
+$(document).ready(function () {
+
+    console.log("om redy")
+
+    myfunction();
+
+    function myfunction() {
+
+
         $.ajax({
-            type: frm.attr('method'),
-            url: frm.attr('action'),
-            data: frm.serialize(),
+            type: "GET",
+            url: 'api/todo-list',
+
             success: function (data) {
-              //  alert('ok');
-                $("#closeModel").click();
+                console.log(data.data);
+                let html = '';
+
+                data.data.forEach(function (item) {
+                    html += '<tr>'
+                    html += '<td>'
+                    html += item.title
+                    html += '</td>'
+                    html += '<td>'
+                    html += item.description
+                    html += '</td>'
+                    html += '</tr>'
+
+                })
+                $('#tbody').append(html);
             }
         });
-        ev.preventDefault();
+
+    }
+
+    $(function () {
+        var frm = $('#sendTodoItem');
+        frm.submit(function (ev) {
+            ev.preventDefault();
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function (data) {
+                    //  alert('ok');
+                    $("#closeModel").click();
+                }
+            });
+            ev.preventDefault();
+            myfunction()
+        });
     });
+
+
+
 });

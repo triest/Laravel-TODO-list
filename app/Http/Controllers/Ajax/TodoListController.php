@@ -46,6 +46,7 @@ class TodoListController extends Controller
      */
     public function store(CreateTodoListRequest $request)
     {
+        dump($request->user()); die();
         $todolist = $this->TODOListService->create($request->validated());
 
         return TodoListResource::make($todolist);

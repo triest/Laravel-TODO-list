@@ -23,10 +23,10 @@ class TagService
 
     public function create(array $array): Tag
     {
-        $todoList = new Tag();
-        $todoList->fill($array);
-        $todoList->save();
-        return $todoList;
+        $tag = new Tag();
+        $tag->fill($array);
+        $tag->save();
+        return $tag;
     }
 
     public function update(Tag $tag, array $array): Tag

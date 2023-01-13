@@ -20,4 +20,8 @@ class TodoList extends BaseModel
         return $this->belongsToMany(Tag::class);
     }
 
+    public function user(){
+        return $this->hasOne(TodoList::class);
+    }
+
 }

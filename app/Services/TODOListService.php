@@ -7,6 +7,7 @@ use App\Http\Requests\TODOList\IndexTodoListRequest;
 use App\Models\Tag;
 use App\Models\TodoList;
 use App\Sorters\ToDoListSorter;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
@@ -26,6 +27,11 @@ class TODOListService
     {
         $todoList = new TodoList();
         $todoList->fill($array);
+        $user = Auth::user();
+        dump($user); die();
+        if($user){
+            $todoList->user()->save($user);
+        }
         $todoList->save();
         return $todoList;
     }
