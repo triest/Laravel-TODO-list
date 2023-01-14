@@ -22,7 +22,7 @@
         <tbody id="tbody"></tbody>
     </table>
 
-    <div id="tagsCloud"></div>
+    <div id="tagsCloud"></div> <button onclick="getToDoList()">Сбросить</button>
 
 
     <!-- The Modal -->

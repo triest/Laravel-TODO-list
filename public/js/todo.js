@@ -8,25 +8,26 @@ $('#sendTodoItem').submit(function (evt) {
     window.history.back();
 });*/
 
-function editToDoItem(id){
+function editToDoItem(id) {
     console.log(id)
     document.getElementById("openEditModal").click();
     // изменяем адрес формы
     let frm = document.getElementById('sendEditItem')
     console.log(frm.action)
-    action =frm.action;
-    action=   action.substr(0, action.lastIndexOf("/"));
+    action = frm.action;
+    action = action.substr(0, action.lastIndexOf("/"));
     console.log(action);
-    action+='/'+id
+    action += '/' + id
     document.getElementById('sendEditItem').action = action;
 
     $.ajax({
         type: "GET",
         url: action,
 
-        success: function (data) {  console.log(data.data);
-              document.getElementById('edit-title').value=data.data.title
-              document.getElementById('edit-description').value=data.data.description
+        success: function (data) {
+            console.log(data.data);
+            document.getElementById('edit-title').value = data.data.title
+            document.getElementById('edit-description').value = data.data.description
         }
     });
 }
@@ -38,7 +39,7 @@ $(document).ready(function () {
     getToDoList();
     getTagsList();
 
-    function getTagsList(){
+    function getTagsList() {
         $.ajax({
             type: "GET",
             url: 'api/tag',
@@ -48,51 +49,12 @@ $(document).ready(function () {
                 let html = '';
                 document.getElementById('tagsCloud').innerHTML = html
                 data.data.forEach(function (item) {
-                    html += '<button onclick="this.getToDoList()"> '+item.title+' </button>'
+                    html += '<button onclick="getToDoList(' + item.id + ')"> ' + item.title + ' </button>'
                 })
                 $('#tagsCloud').append(html);
             }
         });
     }
-
-
-
-    function getToDoList(tag_id = null) {
-
-        let tagsString = "";
-        if(tag_id!=null){
-            tagsString = "tags[]="+tag_id
-        }
-
-
-        $.ajax({
-            type: "GET",
-            url: 'api/todo-list',
-            tagsString,
-            success: function (data) {
-                let html = '';
-                document.getElementById('tbody').innerHTML = html
-
-                data.data.forEach(function (item) {
-                    html += '<tr>'
-                    html += '<td>'
-                    html += item.title
-                    html += '</td>'
-                    html += '<td>'
-                    html += item.description
-                    html += '</td>'
-                    html += '<td>'
-                    html += '<button onclick="editToDoItem('+item.id+')"> Редактировать </button>'
-                    html += '</td>'
-                    html += '</tr>'
-
-                })
-                $('#tbody').append(html);
-            }
-        });
-
-    }
-
 
 
     $(function () {
@@ -134,3 +96,38 @@ $(document).ready(function () {
     });
 
 });
+
+function getToDoList(tag_id = null) {
+
+    let url = 'api/todo-list';
+
+    if (tag_id != null) {
+        url += "?&tags[]=" + tag_id
+    }
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
+            let html = '';
+            document.getElementById('tbody').innerHTML = html
+
+            data.data.forEach(function (item) {
+                html += '<tr>'
+                html += '<td>'
+                html += item.title
+                html += '</td>'
+                html += '<td>'
+                html += item.description
+                html += '</td>'
+                html += '<td>'
+                html += '<button onclick="editToDoItem(' + item.id + ')"> Редактировать </button>'
+                html += '</td>'
+                html += '</tr>'
+
+            })
+            $('#tbody').append(html);
+        }
+    });
+
+}
