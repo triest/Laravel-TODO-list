@@ -8,6 +8,28 @@ $('#sendTodoItem').submit(function (evt) {
     window.history.back();
 });*/
 
+function editToDoItem(id){
+    console.log(id)
+    document.getElementById("openEditModal").click();
+    // изменяем адрес формы
+    let frm = document.getElementById('sendEditItem')
+    console.log(frm.action)
+    action =frm.action;
+    action=   action.substr(0, action.lastIndexOf("/"));
+    console.log(action);
+    action+='/'+id
+    document.getElementById('sendEditItem').action = action;
+
+    $.ajax({
+        type: "GET",
+        url: action,
+
+        success: function (data) {  console.log(data.data);
+              document.getElementById('edit-title').value=data.data.title
+              document.getElementById('edit-description').value=data.data.description
+        }
+    });
+}
 
 $(document).ready(function () {
 
@@ -34,6 +56,9 @@ $(document).ready(function () {
                     html += '<td>'
                     html += item.description
                     html += '</td>'
+                    html += '<td>'
+                    html += '<button onclick="editToDoItem('+item.id+')"> Редактировать </button>'
+                    html += '</td>'
                     html += '</tr>'
 
                 })
@@ -42,6 +67,8 @@ $(document).ready(function () {
         });
 
     }
+
+
 
     $(function () {
         var frm = $('#sendTodoItem');
@@ -62,5 +89,23 @@ $(document).ready(function () {
     });
 
 
+    $(function () {
+        var frm = $('#sendEditItem');
+
+        frm.submit(function (ev) {
+            ev.preventDefault();
+            $.ajax({
+                type: 'put',
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function (data) {
+                    //  alert('ok');
+                    $("#closeModel").click();
+                }
+            });
+            ev.preventDefault();
+            myfunction()
+        });
+    });
 
 });
