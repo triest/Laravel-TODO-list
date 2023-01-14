@@ -35,18 +35,43 @@ $(document).ready(function () {
 
     console.log("om redy")
 
-    myfunction();
+    getToDoList();
+    getTagsList();
 
-    function myfunction() {
+    function getTagsList(){
+        $.ajax({
+            type: "GET",
+            url: 'api/tag',
+
+            success: function (data) {
+                console.log(data.data)
+                let html = '';
+                document.getElementById('tagsCloud').innerHTML = html
+                data.data.forEach(function (item) {
+                    html += '<button onclick="this.getToDoList()"> '+item.title+' </button>'
+                })
+                $('#tagsCloud').append(html);
+            }
+        });
+    }
+
+
+
+    function getToDoList(tag_id = null) {
+
+        let tagsString = "";
+        if(tag_id!=null){
+            tagsString = "tags[]="+tag_id
+        }
 
 
         $.ajax({
             type: "GET",
             url: 'api/todo-list',
-
+            tagsString,
             success: function (data) {
-                console.log(data.data);
                 let html = '';
+                document.getElementById('tbody').innerHTML = html
 
                 data.data.forEach(function (item) {
                     html += '<tr>'
@@ -84,7 +109,7 @@ $(document).ready(function () {
                 }
             });
             ev.preventDefault();
-            myfunction()
+            getToDoList()
         });
     });
 
@@ -104,7 +129,7 @@ $(document).ready(function () {
                 }
             });
             ev.preventDefault();
-            myfunction()
+            getToDoList()
         });
     });
 

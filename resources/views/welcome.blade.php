@@ -22,6 +22,7 @@
         <tbody id="tbody"></tbody>
     </table>
 
+    <div id="tagsCloud"></div>
 
 
     <!-- The Modal -->
