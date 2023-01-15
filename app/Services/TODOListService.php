@@ -36,8 +36,15 @@ class TODOListService
         return $todoList;
     }
 
-    public function update(TodoList $todoList, array $array)
+    /**
+     * @throws \Exception
+     */
+    public function update(TodoList $todoList, array $array): TodoList
     {
+        if(!$todoList->user ||Auth::user()->getAuthIdentifier() != $todoList->user->id){
+           throw new \Exception('Wrong user!');
+        }
+
         $todoList->update($array);
 
         $todoList->save();

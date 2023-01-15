@@ -26,6 +26,9 @@ function editToDoItem(id) {
             console.log(data.data);
             document.getElementById('edit-title').value = data.data.title
             document.getElementById('edit-description').value = data.data.description
+        },
+        error: function(data){
+            alert(data.responseJSON.message);
         }
     });
 
@@ -54,9 +57,11 @@ function viewToDoItem(id) {
         url: action,
 
         success: function (data) {
-            console.log(data.data);
             document.getElementById('view-title').value = data.data.title
             document.getElementById('view-description').value = data.data.description
+        },
+        error: function(data){
+            alert(data.responseJSON.message);
         }
     });
 
@@ -82,14 +87,16 @@ $(document).ready(function () {
             url: 'api/tag',
 
             success: function (data) {
-                console.log(data.data)
                 let html = '';
                 document.getElementById('tagsCloud').innerHTML = html
                 data.data.forEach(function (item) {
                     html += '<button onclick="getToDoList(' + item.id + ')"> ' + item.title + ' </button>'
                 })
                 $('#tagsCloud').append(html);
-            }
+            },
+            error: function(data){
+            alert(data.responseJSON.message);
+        }
         });
     }
 
@@ -105,6 +112,9 @@ $(document).ready(function () {
                 success: function (data) {
                     //  alert('ok');
                     $("#closeModel").click();
+                },
+                error: function(data){
+                    alert(data.responseJSON.message);
                 }
             });
             ev.preventDefault();
@@ -125,6 +135,9 @@ $(document).ready(function () {
                 success: function (data) {
                     //  alert('ok');
                     $("#closeModel").click();
+                },
+                error: function(data){
+                    alert(data.responseJSON.message);
                 }
             });
             ev.preventDefault();
@@ -146,6 +159,9 @@ $("#uploadModel").submit(function(e) {
         data: formData,
         success: function (data) {
             $("#closeModelUpload").click();
+        },
+        error: function(data){
+            alert(data.responseJSON.message);
         },
         cache: false,
         contentType: false,
@@ -185,7 +201,10 @@ function getToDoList(tag_id = null) {
 
             })
             $('#tbody').append(html);
-        }
+        },
+        error: function(data){
+            alert(data.responseJSON.message);
+        },
     });
 
 }
