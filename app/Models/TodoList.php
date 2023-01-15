@@ -21,7 +21,7 @@ class TodoList extends BaseModel
     }
 
     public function user(){
-        return $this->hasOne(TodoList::class);
+        return $this->belongsTo(User::class);
     }
 
 }

@@ -28,9 +28,9 @@ class TODOListService
         $todoList = new TodoList();
         $todoList->fill($array);
         $user = Auth::user();
-        dump($user); die();
+
         if($user){
-            $todoList->user()->save($user);
+            $todoList->user()->associate($user);
         }
         $todoList->save();
         return $todoList;
