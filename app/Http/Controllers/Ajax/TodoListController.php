@@ -12,6 +12,7 @@ use App\Http\Resources\ToDoList\TodoListCollection;
 use App\Http\Resources\ToDoList\TodoListResource;
 use App\Models\TodoList;
 use App\Services\TODOListService;
+use Illuminate\Support\Facades\Auth;
 
 class TodoListController extends Controller
 {
@@ -46,7 +47,9 @@ class TodoListController extends Controller
      */
     public function store(CreateTodoListRequest $request)
     {
-        dump($request->user()); die();
+        dump($request->user());
+        dump(Auth::user());
+        die();
         $todolist = $this->TODOListService->create($request->validated());
 
         return TodoListResource::make($todolist);

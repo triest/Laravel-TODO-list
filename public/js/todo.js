@@ -9,16 +9,14 @@ $('#sendTodoItem').submit(function (evt) {
 });*/
 
 function editToDoItem(id) {
-    console.log(id)
     document.getElementById("openEditModal").click();
     // изменяем адрес формы
     let frm = document.getElementById('sendEditItem')
-    console.log(frm.action)
     action = frm.action;
     action = action.substr(0, action.lastIndexOf("/"));
-    console.log(action);
     action += '/' + id
     document.getElementById('sendEditItem').action = action;
+
 
     $.ajax({
         type: "GET",
@@ -30,6 +28,45 @@ function editToDoItem(id) {
             document.getElementById('edit-description').value = data.data.description
         }
     });
+
+    frm = document.getElementById('uploadModel')
+
+      action = action.substr(0, action.lastIndexOf("/"));
+      console.log(action);
+      action+= '/'+id + '/attachment'
+
+    document.getElementById('uploadModel').action = action;
+}
+
+
+function viewToDoItem(id) {
+    document.getElementById("openViewModal").click();
+    // изменяем адрес формы
+    let frm = document.getElementById('sendEditItem')
+    action = frm.action;
+    action = action.substr(0, action.lastIndexOf("/"));
+    action += '/' + id
+    document.getElementById('sendEditItem').action = action;
+
+
+    $.ajax({
+        type: "GET",
+        url: action,
+
+        success: function (data) {
+            console.log(data.data);
+            document.getElementById('view-title').value = data.data.title
+            document.getElementById('view-description').value = data.data.description
+        }
+    });
+
+    frm = document.getElementById('uploadModel')
+
+    action = action.substr(0, action.lastIndexOf("/"));
+    console.log(action);
+    action+= '/'+id + '/attachment'
+
+    document.getElementById('uploadModel').action = action;
 }
 
 $(document).ready(function () {
@@ -95,7 +132,27 @@ $(document).ready(function () {
         });
     });
 
+
 });
+
+
+$("#uploadModel").submit(function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    var frm = $('#uploadModel');
+    $.ajax({
+        url: frm.attr('action'),
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            $("#closeModelUpload").click();
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
 
 function getToDoList(tag_id = null) {
 
@@ -122,6 +179,7 @@ function getToDoList(tag_id = null) {
                 html += '</td>'
                 html += '<td>'
                 html += '<button onclick="editToDoItem(' + item.id + ')"> Редактировать </button>'
+                html += '<button onclick="viewToDoItem(' + item.id + ')"> Смотреть </button>'
                 html += '</td>'
                 html += '</tr>'
 

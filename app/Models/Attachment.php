@@ -9,6 +9,7 @@ class Attachment extends BaseModel
 {
 
 
+
     public const TYPE_PHOTO = 'PHOTO';
     public const TYPE_DOCUMENT = 'DOCUMENT';
 
@@ -18,8 +19,8 @@ class Attachment extends BaseModel
     ];
 
     public $fillable = [
-        'entityType',
-        'entityId',
+        'entity_type',
+        'entity_id',
         'fileId',
         'name',
         'type',
@@ -46,7 +47,7 @@ class Attachment extends BaseModel
      */
     public function file()
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(File::class,'fileId','id');
     }
 
     public function scopeOfType($query, $type)

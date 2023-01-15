@@ -29,10 +29,11 @@ class AttachmentService
     public function create(array $data, string $type = Attachment::TYPE_PHOTO): Attachment
     {
         $file = new File();
-        $file->path = $this->uploadFile($data['file'], 'attachments');
+        $file->path = 'attachments/'. $this->uploadFile($data['file'], 'attachments');
         $file->save();
         $data['fileId'] = $file->id;
         $data['type'] = $type;
+
         return Attachment::create($data)->fresh();
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\ToDoList;
 
+use App\Http\Requests\AttachmentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TodoListResource extends JsonResource
@@ -18,6 +19,7 @@ class TodoListResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' =>$this->description,
+            'attacjment' => $this->attachments ? AttachmentResource::collection($this->attachments) : null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

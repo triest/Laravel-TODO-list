@@ -9,6 +9,7 @@ use App\Models\Attachment;
 use App\Models\TodoList;
 use App\Services\AttachmentService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class TodoListAttachController extends Controller
@@ -36,10 +37,11 @@ class TodoListAttachController extends Controller
     public function store(TodoList $todoList, StoreAttachmentDocumentPRRequest $request)
     {
         $attributes = $request->validated();
-        $attributes['entityType'] = TodoList::class;
-        $attributes['entityId'] = $todoList->id;
+     //   dump($attributes);
+        $attributes['entity_type'] = TodoList::class;
+        $attributes['entity_id'] = $todoList->id;
         $attachment = $this->attachmentService->create($attributes, Attachment::TYPE_DOCUMENT);
-        return AttachmentResource::make($attachment)->response()->setStatusCode(201);
+        return AttachmentResource::make($attachment)->response()->setStatusCode(200);
     }
 
 
