@@ -1,15 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TODOList\AddTagToToDoListRequest;
 use App\Http\Requests\TODOList\CreateTodoListRequest;
 use App\Http\Requests\TODOList\IndexTodoListRequest;
 use App\Http\Requests\TODOList\UpdateTodoListRequest;
-use App\Http\Resources\TodoListResource;
+use App\Http\Resources\Tag\TagResource;
+use App\Http\Resources\ToDoList\TodoListCollection;
+use App\Http\Resources\ToDoList\TodoListResource;
 use App\Models\TodoList;
 use App\Services\TODOListService;
+use Illuminate\Support\Facades\Auth;
 
-class TodoListAttachController extends Controller
+class TodoListController extends Controller
 {
 
     public TODOListService $TODOListService;
@@ -25,17 +30,19 @@ class TodoListAttachController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return TodoListCollection
      */
     public function index(IndexTodoListRequest $request)
     {
         $collection = $this->TODOListService->index($request);
+
+        return TodoListCollection::make($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return TodoListResource
      */
     public function store(CreateTodoListRequest $request)
@@ -48,27 +55,26 @@ class TodoListAttachController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return TodoListResource
      */
     public function show(TodoList $todo_list)
     {
-        $todolist =  $this->TODOListService->show($todo_list);
+        $todolist = $this->TODOListService->show($todo_list);
 
         return TodoListResource::make($todolist);
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return TodoListResource
      */
-    public function update(UpdateTodoListRequest $request,TodoList $todo_list)
+    public function update(UpdateTodoListRequest $request, TodoList $todo_list)
     {
-        $todolist = $this->TODOListService->update($todo_list,$request->validated());
+        $todolist = $this->TODOListService->update($todo_list, $request->validated());
 
         return TodoListResource::make($todolist);
     }
@@ -76,11 +82,22 @@ class TodoListAttachController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(TodoList $todo_list)
     {
         $this->TODOListService->destroy($todo_list);
     }
+
+
+    public function addTag(TodoList $todoList,AddTagToToDoListRequest $request){
+        $this->TODOListService->addTag($todoList,$request->validated());
+    }
+
+    public function getTags(TodoList $todoList){
+
+        return TagResource::collection($todoList->tags);
+    }
+
 }

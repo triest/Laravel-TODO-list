@@ -10,9 +10,19 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+window.$ = require('jquery');
+
 window.axios = require('axios');
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.ajax = require('ajax')
+
+//window.axios.defaults.withCredentials = true;
+
+window.ajax.defaults.withCredentials = true;
+
+//window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.ajax.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

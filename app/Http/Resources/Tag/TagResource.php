@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Tag;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TodoListResource extends JsonResource
+class TagResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,6 @@ class TodoListResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'description' =>$this->description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }
