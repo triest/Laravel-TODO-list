@@ -21,6 +21,7 @@ class Attachment extends BaseModel
     public $fillable = [
         'entity_type',
         'entity_id',
+        'previewId',
         'fileId',
         'name',
         'type',
@@ -48,6 +49,10 @@ class Attachment extends BaseModel
     public function file()
     {
         return $this->belongsTo(File::class,'fileId','id');
+    }
+
+    public function preview(){
+        return $this->belongsTo(File::class,'previewId','id');
     }
 
     public function scopeOfType($query, $type)

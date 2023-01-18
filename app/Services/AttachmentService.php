@@ -6,6 +6,9 @@ namespace App\Services;
 use App\Models\Attachment;
 use App\Models\File;
 use App\Traits\UploadFileTrait;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class AttachmentService
 {
@@ -28,11 +31,33 @@ class AttachmentService
      */
     public function create(array $data, string $type = Attachment::TYPE_PHOTO): Attachment
     {
+        $patch = $data['entity_id'];
         $file = new File();
-        $file->path = 'attachments/'. $this->uploadFile($data['file'], 'attachments');
+        $file->path = 'attachments/' . $this->uploadFile($data['file'], $patch);
+
         $file->save();
         $data['fileId'] = $file->id;
         $data['type'] = $type;
+
+        $input['imagename'] = time() . '.' . $data['file']->extension();
+
+        $destinationPath = public_path('\temp');
+        $img = Image::make($data['file']->path());
+        $temp = $img->resize(150, 150, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath . '\\' . $input['imagename']);
+
+
+        $fileName = md5($temp->basename). Str::uuid().'.'.$temp->extension;
+
+        $patch = Storage::disk('public')->put('/' . $data['entity_id'] . '/' . $fileName, $temp);
+
+        $file = new File();
+        $file->path = 'attachments/'.$data['entity_id']. '/' . $fileName;
+        $file->save();
+
+        $data['previewId'] = $file->id;
+
 
         return Attachment::create($data)->fresh();
     }

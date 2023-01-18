@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -12,6 +12,7 @@ class AttachmentResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'path' => $this->file->relativeUrl(),
+            'preview_path' => $this->preview ? $this->preview->relativeUrl() : null,
             'mime' => $this->file->mime(),
         ];
     }

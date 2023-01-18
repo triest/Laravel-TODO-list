@@ -50,7 +50,7 @@ function viewToDoItem(id) {
     action = action.substr(0, action.lastIndexOf("/"));
     action += '/' + id
     document.getElementById('sendEditItem').action = action;
-
+    console.log("view")
 
     $.ajax({
         type: "GET",
@@ -59,6 +59,18 @@ function viewToDoItem(id) {
         success: function (data) {
             document.getElementById('view-title').value = data.data.title
             document.getElementById('view-description').value = data.data.description
+            let attachment = data.data.attachment;
+            console.log(attachment)
+
+            let html = '';
+            document.getElementById('images').innerHTML = html
+
+            attachment.forEach(function (item) {
+                html += '<a href="' + item.path + '" target="_blank"><img src="' + item.preview_path + ' " width="150" height="150"></a>';
+            })
+            $('#images').append(html);
+
+
         },
         error: function(data){
             alert(data.responseJSON.message);

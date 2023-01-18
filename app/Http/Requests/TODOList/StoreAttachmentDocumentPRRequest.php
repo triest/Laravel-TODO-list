@@ -26,7 +26,7 @@ class StoreAttachmentDocumentPRRequest extends FormRequest
     {
         return [
             'name' => 'string|max:255',
-            'file' => 'required|file|max:102400',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 

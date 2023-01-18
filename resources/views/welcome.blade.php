@@ -99,6 +99,7 @@
                         <label for="exampleInputPassword1" class="form-label">Описание</label>
                         <textarea class="form-control" id="view-description" name="description" readonly></textarea>
                     </div>
+                    <div id="images"></div>
                     <button type="button" id="closeModelUpload" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
                     </button>
                 </form>

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AttachmentResource;
 use App\Http\Requests\TODOList\StoreAttachmentDocumentPRRequest;
+use App\Http\Resources\AttachmentResource;
 use App\Models\Attachment;
 use App\Models\TodoList;
 use App\Services\AttachmentService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class TodoListAttachController extends Controller
